@@ -1,0 +1,13 @@
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.exe
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.deps.json
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.runtimeconfig.json
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.runtimeconfig.dev.json
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.dll
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\bin\Debug\netcoreapp3.1\PrimAlgorithm.pdb
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.csprojAssemblyReference.cache
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.AssemblyInfoInputs.cache
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.AssemblyInfo.cs
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.csproj.CoreCompileInputs.cache
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.dll
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.pdb
+D:\Users\Vincent Bellemare\Desktop\WorkSpace\PrimAlgorithm\PrimAlgorithm\obj\Debug\netcoreapp3.1\PrimAlgorithm.genruntimeconfig.cache
