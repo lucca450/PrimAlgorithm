@@ -1,0 +1,13 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/contentModel.xml
+/modules.xml
+/.idea.PrimAlgorithm.iml
+/projectSettingsUpdater.xml
+# Datasource local storage ignored files
+/../../../../../../../:\Work Projets\Algorithmes\TP1\.idea\.idea.PrimAlgorithm\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
