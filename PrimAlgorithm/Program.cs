@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace PrimAlgorithm
 {
@@ -6,6 +7,7 @@ namespace PrimAlgorithm
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Welcome to the mazes generator 2000 !!");
             bool ok;
             int rows = 0, columns = 0, minimumSize = 4;

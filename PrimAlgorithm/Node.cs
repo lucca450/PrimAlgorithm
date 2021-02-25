@@ -7,6 +7,7 @@ namespace PrimAlgorithm
 {
     class Node
     {
+        public int nodeID;
         public Link up { get; set; }
         public Link down { get; set; }
         public Link left { get; set; }
@@ -20,6 +21,6 @@ namespace PrimAlgorithm
             right = r;
         }
 
-        public Node() { }
+        public Node() { nodeID = Utilities.NextNodeID(); }
     }
 }

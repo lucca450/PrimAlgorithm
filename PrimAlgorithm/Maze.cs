@@ -6,6 +6,7 @@ namespace PrimAlgorithm
 {
     class Maze
     {
+        public List<Link> path = new List<Link>();
         public int rows { get; set; }
         public int columns { get; set; }
 
@@ -58,33 +59,29 @@ namespace PrimAlgorithm
 
             PrimsPathFinder(ref count);
 
-
-
-
             return count;
         }
 
         private void PrimsPathFinder(ref int count)
         {
             Node currentNode = begining;
+            List<Link> links = new List<Link>();
 
             while(currentNode != ending)
             {
-                List<Link> links = new List<Link>();
-
-                if(currentNode.left != null)
+                if(currentNode.left != null && !links.Contains(currentNode.left) && !path.Contains(currentNode.left))
                 {
                     links.Add(currentNode.left);
                 }
-                if (currentNode.up != null)
+                if (currentNode.up != null && !links.Contains(currentNode.up) && !path.Contains(currentNode.up))
                 {
                     links.Add(currentNode.up);
                 }
-                if (currentNode.right != null)
+                if (currentNode.right != null && !links.Contains(currentNode.right) && !path.Contains(currentNode.right))
                 {
                     links.Add(currentNode.right);
                 }
-                if (currentNode.down != null)
+                if (currentNode.down != null && !links.Contains(currentNode.down) && !path.Contains(currentNode.down))
                 {
                     links.Add(currentNode.down);
                 }
@@ -93,11 +90,12 @@ namespace PrimAlgorithm
 
                 Link next = links[0];
                 links.Remove(next);
+                path.Add(next);
 
-                if (next.node1 == currentNode)
-                    currentNode = next.node2;
+                if (next.from == currentNode)
+                    currentNode = next.to;
                 else
-                    currentNode = next.node1;
+                    currentNode = next.from;
             }
         }
 

@@ -7,15 +7,16 @@ namespace PrimAlgorithm
 {
     class Link : IComparable<Link>
     {
-        int weight;
-        public Node node1 { get; set; }
-        public Node node2 { get; set; }
+        int weight, linkID;
+        public Node from { get; set; }
+        public Node to { get; set; }
 
-    public Link(int w, Node n1, Node n2)
+        public Link(int w, Node n1, Node n2)
         {
+            linkID = Utilities.NextLinkID();
             weight = w;
-            node1 = n1;
-            node2 = n2;
+            from = n1;
+            to = n2;
         }
 
         public int CompareTo([AllowNull] Link other)
