@@ -12,7 +12,7 @@ namespace PrimAlgorithm
 
             do
             {
-                Console.Write("Enter maze row : ");
+                Console.Write("Enter maze row (minimum 4): ");
                 try
                 {
                     rows = Int32.Parse(Console.ReadLine());
@@ -33,7 +33,7 @@ namespace PrimAlgorithm
             } while (!ok);
             do
             {
-                Console.Write("Enter maze column : ");
+                Console.Write("Enter maze column (minimum 4): ");
                 try
                 {
                     columns = Int32.Parse(Console.ReadLine());

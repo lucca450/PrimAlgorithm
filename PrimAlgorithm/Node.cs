@@ -12,6 +12,11 @@ namespace PrimAlgorithm
         public Link left { get; set; }
         public Link right { get; set; }
 
+        public Link inboundLink = null;
+        public Link outboundLink = null;
+
+        public int id;
+
         public Node(Link u, Link d, Link l, Link r)
         {
             up = u;
@@ -20,6 +25,35 @@ namespace PrimAlgorithm
             right = r;
         }
 
-        public Node() { }
+        public Node() { id = Utilities.NextIDNode(); }
+
+        public bool IsAvailableToGoToNext()
+        {
+            return inboundLink == null /*&& HasAvailableLink()*/ && outboundLink == null;
+        }
+
+        private bool HasAvailableLink()
+        {
+            if (up != null && up.from == null && up.to == null)
+            {
+                return true;
+            }
+
+            if (down != null && down.from == null && down.to == null)
+            {
+                return true;
+            }
+
+            if (left != null && left.from == null && left.to == null)
+            {
+                return true;
+            }
+
+            if (right != null && right.from == null && right.to == null)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

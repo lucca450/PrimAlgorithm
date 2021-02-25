@@ -7,11 +7,13 @@ namespace PrimAlgorithm
 {
     class Link : IComparable<Link>
     {
-        int weight;
+        public int weight;
         public Node node1 { get; set; }
         public Node node2 { get; set; }
+        public Node from { get; set; }
+        public Node to { get; set; }
 
-    public Link(int w, Node n1, Node n2)
+        public Link(int w, Node n1, Node n2)
         {
             weight = w;
             node1 = n1;

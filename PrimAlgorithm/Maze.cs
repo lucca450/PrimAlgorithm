@@ -6,6 +6,10 @@ namespace PrimAlgorithm
 {
     class Maze
     {
+        public List<Node> visitedNodes = new List<Node>();
+        public List<Link> path = new List<Link>();
+        public List<Link> links = new List<Link>();
+        public List<Link> removedLinks = new List<Link>();
         public int rows { get; set; }
         public int columns { get; set; }
 
@@ -56,53 +60,142 @@ namespace PrimAlgorithm
             int endRow = rows-1 - startRow, endColumn = columns-1 - startColumn;
             ending = matrix[endRow, endColumn];
 
-            PrimsPathFinder(ref count);
+            PrimsPathFinder(ref count, begining);
 
-
+            toString();
 
 
             return count;
         }
 
-        private void PrimsPathFinder(ref int count)
+        private void PrimsPathFinder(ref int count, Node currentNode, bool checkLinks = true)
         {
-            Node currentNode = begining;
-
-            while(currentNode != ending)
+            Console.WriteLine("Current Node : " + currentNode.id);
+            if (checkLinks)
             {
-                List<Link> links = new List<Link>();
-
-                if(currentNode.left != null)
+                if (currentNode.left != null && !links.Contains(currentNode.left) && !path.Contains(currentNode.left))
                 {
+                    currentNode.left.from = currentNode;
                     links.Add(currentNode.left);
                 }
-                if (currentNode.up != null)
+                if (currentNode.up != null && !links.Contains(currentNode.up) && !path.Contains(currentNode.up))
                 {
+                    currentNode.up.from = currentNode;
                     links.Add(currentNode.up);
                 }
-                if (currentNode.right != null)
+                if (currentNode.right != null && !links.Contains(currentNode.right) && !path.Contains(currentNode.right))
                 {
+                    currentNode.right.from = currentNode;
                     links.Add(currentNode.right);
                 }
-                if (currentNode.down != null)
+                if (currentNode.down != null && !links.Contains(currentNode.down) && !path.Contains(currentNode.down))
                 {
+                    currentNode.down.from = currentNode;
                     links.Add(currentNode.down);
                 }
 
                 links.Sort();
+            }
+            if (links.Count == 0)
+                return;
 
-                Link next = links[0];
-                links.Remove(next);
+            Link toNext;
+            Node nextNode;
 
-                if (next.node1 == currentNode)
-                    currentNode = next.node2;
-                else
-                    currentNode = next.node1;
+            count++;
+            toNext = links[0];
+
+            if (toNext.node1 == currentNode)
+                nextNode = toNext.node2;
+            else if (toNext.node2 == currentNode)
+                nextNode = toNext.node1;
+            else
+            {
+                Console.WriteLine("Link with Node :" + toNext.node1.id + " and Node :" + toNext.node2.id + " Doesnt belong to me");
+                nextNode = toNext.from;
+                PrimsPathFinder(ref count, nextNode);
+                return;
+            }
+
+            if (nextNode.IsAvailableToGoToNext())
+            {
+                toNext.to = nextNode;
+
+                currentNode.outboundLink = toNext;
+                nextNode.inboundLink = toNext;
+
+                path.Add(toNext);
+                links.Remove(toNext);
+
+                Console.WriteLine("Link with Node : " + toNext.node1.id + " and " + toNext.node2.id + " added to " + currentNode.id);
+                Console.WriteLine("Next");
+                PrimsPathFinder(ref count, nextNode);
+            }
+            else
+            {
+                links.Remove(toNext);
+                Console.WriteLine("Unusable Link Removed :\nNode : " + toNext.node1.id + " and Node : " + toNext.node2.id);
+                PrimsPathFinder(ref count, currentNode, false); // readd false
             }
         }
 
         public void toString()
         {
+            DisplayNode();
+        }
+
+        private void DisplayNode()
+        {
+            Node firstOfLine = begining;
+            Node currentNode = begining;
+            string rightLinkLine = "", downLinkLine = "";
+
+            while (currentNode != null)
+            {
+                rightLinkLine = " ";
+                downLinkLine = "";
+                while (currentNode != null)
+                {
+                    rightLinkLine += String.Format("{0,-6}", currentNode.id);
+
+
+                    if (path.Contains(currentNode.right))       //If there's a right node
+                    {
+                        rightLinkLine += String.Format("{0,-6}", "--" + currentNode.right.weight + "--");
+                    }
+                    else
+                        rightLinkLine += String.Format("{0,-6}", " ");
+
+                    if (path.Contains(currentNode.down))
+                    {
+                        downLinkLine += String.Format("{0,-12}", "|" + currentNode.down.weight);   
+                    }else
+                        downLinkLine += String.Format("{0,-12}", " ");
+
+                    if (currentNode.right != null)
+                        currentNode = currentNode.right.node2;
+                    else
+                        currentNode = null;
+                    
+                } 
+
+                Console.WriteLine(rightLinkLine);
+                Console.WriteLine(downLinkLine);
+                
+                // Preps for next line
+                if (firstOfLine.down != null)
+                {
+                    currentNode = firstOfLine.down.node2;
+                    firstOfLine = currentNode;
+                }else
+                    currentNode = null;
+            }
+
+
+
+
+
+
 
         }
 
