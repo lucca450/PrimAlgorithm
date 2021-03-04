@@ -71,6 +71,7 @@ namespace PrimAlgorithm
         private void PrimsPathFinder(ref int count, Node currentNode, bool checkLinks = true)
         {
             Console.WriteLine("Current Node : " + currentNode.id);
+            Console.WriteLine();
             if (checkLinks)
             {
                 if (currentNode.left != null && !links.Contains(currentNode.left) && !path.Contains(currentNode.left))
@@ -112,8 +113,9 @@ namespace PrimAlgorithm
             else
             {
                 Console.WriteLine("Link with Node :" + toNext.node1.id + " and Node :" + toNext.node2.id + " Doesnt belong to me");
+                Console.WriteLine("--------");
                 nextNode = toNext.from;
-                PrimsPathFinder(ref count, nextNode);
+                PrimsPathFinder(ref count, nextNode, false);
                 return;
             }
 
@@ -128,35 +130,31 @@ namespace PrimAlgorithm
                 links.Remove(toNext);
 
                 Console.WriteLine("Link with Node : " + toNext.node1.id + " and " + toNext.node2.id + " added to " + currentNode.id);
-                Console.WriteLine("Next");
+                Console.WriteLine("---Next---");
                 PrimsPathFinder(ref count, nextNode);
             }
             else
             {
                 links.Remove(toNext);
                 Console.WriteLine("Unusable Link Removed :\nNode : " + toNext.node1.id + " and Node : " + toNext.node2.id);
+                Console.WriteLine("--------");
                 PrimsPathFinder(ref count, currentNode, false); // readd false
             }
         }
 
         public void toString()
         {
-            DisplayNode();
-        }
-
-        private void DisplayNode()
-        {
             Node firstOfLine = begining;
             Node currentNode = begining;
-            string rightLinkLine = "", downLinkLine = "";
+            string rightLinkLine, downLinkLine;
 
             while (currentNode != null)
             {
-                rightLinkLine = " ";
+                rightLinkLine = "";
                 downLinkLine = "";
                 while (currentNode != null)
                 {
-                    rightLinkLine += String.Format("{0,-6}", currentNode.id);
+                    rightLinkLine += String.Format("{0,-3}", currentNode.id);
 
 
                     if (path.Contains(currentNode.right))       //If there's a right node
@@ -168,36 +166,30 @@ namespace PrimAlgorithm
 
                     if (path.Contains(currentNode.down))
                     {
-                        downLinkLine += String.Format("{0,-12}", "|" + currentNode.down.weight);   
-                    }else
+                        downLinkLine += String.Format("{0,-12}", "|" + currentNode.down.weight);
+                    }
+                    else
                         downLinkLine += String.Format("{0,-12}", " ");
 
                     if (currentNode.right != null)
                         currentNode = currentNode.right.node2;
                     else
                         currentNode = null;
-                    
-                } 
+
+                }
 
                 Console.WriteLine(rightLinkLine);
                 Console.WriteLine(downLinkLine);
-                
+
                 // Preps for next line
                 if (firstOfLine.down != null)
                 {
                     currentNode = firstOfLine.down.node2;
                     firstOfLine = currentNode;
-                }else
+                }
+                else
                     currentNode = null;
             }
-
-
-
-
-
-
-
         }
-
     }
 }
