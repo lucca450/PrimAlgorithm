@@ -62,9 +62,6 @@ namespace PrimAlgorithm
 
             PrimsPathFinder(ref count, begining);
 
-            toString();
-
-
             return count;
         }
 
@@ -144,9 +141,13 @@ namespace PrimAlgorithm
 
         public void toString()
         {
-            Node firstOfLine = begining;
-            Node currentNode = begining;
-            string rightLinkLine, downLinkLine;
+            Console.WriteLine("B: Begining");
+            Console.WriteLine("E: Ending");
+            Console.WriteLine("O: Path\n");
+
+            Node firstOfLine = matrix[0,0];
+            Node currentNode = matrix[0, 0];
+            string rightLinkLine = "", downLinkLine;
 
             while (currentNode != null)
             {
@@ -154,28 +155,32 @@ namespace PrimAlgorithm
                 downLinkLine = "";
                 while (currentNode != null)
                 {
-                    rightLinkLine += String.Format("{0,-3}", currentNode.id);
-
-
-                    if (path.Contains(currentNode.right))       //If there's a right node
-                    {
-                        rightLinkLine += String.Format("{0,-6}", "--" + currentNode.right.weight + "--");
-                    }
+                    if(currentNode == begining)
+                        rightLinkLine += String.Format("{0,-3}", "B");
+                    else if(currentNode == ending)
+                        rightLinkLine += String.Format("{0,-3}", "E");
                     else
-                        rightLinkLine += String.Format("{0,-6}", " ");
+                        rightLinkLine += String.Format("{0,-3}", "O");
 
-                    if (path.Contains(currentNode.down))
-                    {
-                        downLinkLine += String.Format("{0,-12}", "|" + currentNode.down.weight);
-                    }
-                    else
-                        downLinkLine += String.Format("{0,-12}", " ");
+                    if (currentNode.down != null)
+                        if (path.Contains(currentNode.down))
+                            downLinkLine += String.Format("{0,-3}", "O");
+                        else
+                            downLinkLine += String.Format("{0,-3}", "#");
+
+                    if (currentNode.right != null && currentNode.down != null)
+                        downLinkLine += String.Format("{0,-3}", "#");
 
                     if (currentNode.right != null)
+                    {
+                        if (path.Contains(currentNode.right))       //If there's a right node
+                            rightLinkLine += String.Format("{0,-3}", "O");
+                        else
+                            rightLinkLine += String.Format("{0,-3}", "#");
                         currentNode = currentNode.right.node2;
-                    else
+                    } else
                         currentNode = null;
-
+                        
                 }
 
                 Console.WriteLine(rightLinkLine);
@@ -190,6 +195,67 @@ namespace PrimAlgorithm
                 else
                     currentNode = null;
             }
+
+            string output = "";
+            for (int i = 0; i < rightLinkLine.Length; i++)
+                output += "-";
+            Console.WriteLine(output);
+        }
+
+        public void FullMaze()
+        {
+            Node firstOfLine = matrix[0, 0];
+            Node currentNode = matrix[0, 0];
+            string rightLinkLine = "", downLinkLine;
+
+            while (currentNode != null)
+            {
+                rightLinkLine = "";
+                downLinkLine = "";
+                while (currentNode != null)
+                {
+                    rightLinkLine += String.Format("{0,-4}", currentNode.id);
+
+                    if(currentNode.right != null){                      //If there's a right link
+                        if (path.Contains(currentNode.right))               //If right link part of the path
+                        {
+                            rightLinkLine += String.Format("{0,-8}", "--" + currentNode.right.weight + "--");
+                        }else
+                            rightLinkLine += String.Format("{0,-8}", "  " + currentNode.right.weight + "  ");
+                    }
+                        
+                    if(currentNode.down != null){                       //If there's a down link
+                        if (path.Contains(currentNode.down))                //If down link part of the path
+                        {
+                            downLinkLine += String.Format("{0,-12}", "|" + currentNode.down.weight);
+                        }else
+                            downLinkLine += String.Format("{0,-12}", currentNode.down.weight);
+                    }
+                    
+                    if (currentNode.right != null)                      //If there's a link on the right
+                        currentNode = currentNode.right.node2;              //Go to that link 2nd node
+                    else
+                        currentNode = null;
+
+                }
+
+                Console.WriteLine(rightLinkLine);
+                Console.WriteLine(downLinkLine);
+
+                // Preps for next line
+                if (firstOfLine.down != null)                           //If there's a link down
+                {
+                    currentNode = firstOfLine.down.node2;                   //Go to that next row of nodes
+                    firstOfLine = currentNode;
+                }
+                else
+                    currentNode = null;
+            }
+
+            string output = "";
+            for (int i = 0; i < rightLinkLine.Length; i++)
+                output += "-";
+            Console.WriteLine(output);
         }
     }
 }

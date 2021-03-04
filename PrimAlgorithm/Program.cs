@@ -100,6 +100,14 @@ namespace PrimAlgorithm
 
             int nbOperation = maze.Generate(rows-1, columns-1);
 
+            Console.WriteLine("Maze generated in " + nbOperation + " operations :\n");
+
+            maze.toString();
+
+            Console.WriteLine("Nodes with links : \n");
+            maze.FullMaze();
+            int i = 0;
+
         }
     }
 }
