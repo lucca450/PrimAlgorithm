@@ -61,7 +61,7 @@ namespace PrimAlgorithm
                 try
                 {
                     rows = Int32.Parse(Console.ReadLine());
-                    if (rows >= 1 && rows <= maze.columns)
+                    if (rows >= 1 && rows <= maze.rows)
                         ok = true;
                     else
                     {
@@ -82,7 +82,7 @@ namespace PrimAlgorithm
                 try
                 {
                     columns = Int32.Parse(Console.ReadLine());
-                    if (columns >= 1 && columns <= maze.rows)
+                    if (maze.VerifyStartCoordinates(rows, columns))
                         ok = true;
                     else
                     {

@@ -139,6 +139,28 @@ namespace PrimAlgorithm
             }
         }
 
+        public bool VerifyStartCoordinates(int iRow, int iColumn)
+        {
+            if (!(iColumn >= 1 && iColumn <= columns))
+            {
+                Console.WriteLine("Error - The column must be part of the maze");
+                return false;
+            }
+
+            if (iColumn == 1 || iColumn == columns)
+                return true;
+            else
+            {
+                if (!(iRow == 1 || iRow == rows))
+                {
+                    Console.WriteLine("Error - Maze start must be on the edges");
+                    return false;
+                }
+                else
+                    return true;
+            }
+        }
+
         public void toString()
         {
             Console.WriteLine("B: Begining");
