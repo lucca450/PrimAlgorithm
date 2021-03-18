@@ -11,7 +11,6 @@ namespace PrimAlgorithm
         public Node node1 { get; set; }
         public Node node2 { get; set; }
         public Node from { get; set; }
-        public Node to { get; set; }
 
         public Link(int w, Node n1, Node n2)
         {
@@ -20,7 +19,7 @@ namespace PrimAlgorithm
             node2 = n2;
         }
 
-        public int CompareTo([AllowNull] Link other)
+        public int CompareTo([AllowNull] Link other) //Override List<Link>.Sort()
         {
             if (other == null)
                 return 1;

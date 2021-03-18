@@ -9,7 +9,8 @@ namespace PrimAlgorithm
         public List<Node> visitedNodes = new List<Node>();
         public List<Link> path = new List<Link>();
         public List<Link> links = new List<Link>();
-        public List<Link> removedLinks = new List<Link>();
+        public List<Node> allNodes = new List<Node>();
+
         public int rows { get; set; }
         public int columns { get; set; }
 
@@ -25,120 +26,141 @@ namespace PrimAlgorithm
             matrix = new Node[rows,columns];
         }
 
-        private int RandomWeight()
+        private void InitializeNodesAndLinks(int startRow, int startColumn)
         {
-            Random rnd = new Random();
-            return rnd.Next(1, 11);
-        }
-
-        public int Generate(int startRow, int startColumn)
-        {
-            int count = 0;
-            for(int i = 0; i < rows; i++)
+            for (int i = 0; i < rows; i++)
             {
-                for(int j = 0;j< columns; j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    count++;
                     matrix[i, j] = new Node();
-                    if(j > 0)
+                    if (j > 0)
                     {
-                        Link link = new Link(RandomWeight(), matrix[i, j - 1], matrix[i, j]);
+                        Link link = new Link(Utilities.RandomWeight(), matrix[i, j - 1], matrix[i, j]);
                         matrix[i, j].left = link;
                         matrix[i, j - 1].right = link;
                     }
-                    if(i > 0)
+                    if (i > 0)
                     {
-                        Link link = new Link(RandomWeight(), matrix[i - 1, j], matrix[i, j]);
+                        Link link = new Link(Utilities.RandomWeight(), matrix[i - 1, j], matrix[i, j]);
                         matrix[i, j].up = link;
                         matrix[i - 1, j].down = link;
                     }
+
+                    allNodes.Add(matrix[i, j]);
                 }
             }
 
             begining = matrix[startRow, startColumn];
 
-            int endRow = rows-1 - startRow, endColumn = columns-1 - startColumn;
+            int endRow = rows - 1 - startRow, endColumn = columns - 1 - startColumn;
             ending = matrix[endRow, endColumn];
+        }
 
-            PrimsPathFinder(ref count, begining);
+        public int Generate(int startRow, int startColumn)
+        {
+            InitializeNodesAndLinks(startRow, startColumn);
+            return ExecutePrimsAlgorithm();
+        }
+
+        private void AddLinks(Node currentNode)
+        {
+            if (currentNode.left != null && !links.Contains(currentNode.left) && !path.Contains(currentNode.left))
+            {
+                currentNode.left.from = currentNode;
+                links.Add(currentNode.left);
+            }
+            if (currentNode.up != null && !links.Contains(currentNode.up) && !path.Contains(currentNode.up))
+            {
+                currentNode.up.from = currentNode;
+                links.Add(currentNode.up);
+            }
+            if (currentNode.right != null && !links.Contains(currentNode.right) && !path.Contains(currentNode.right))
+            {
+                currentNode.right.from = currentNode;
+                links.Add(currentNode.right);
+            }
+            if (currentNode.down != null && !links.Contains(currentNode.down) && !path.Contains(currentNode.down))
+            {
+                currentNode.down.from = currentNode;
+                links.Add(currentNode.down);
+            }
+        }
+
+        private int ExecutePrimsAlgorithm()
+        {
+            int count = 0;
+            Node currentNode = begining, nextNode;
+            visitedNodes.Add(currentNode);
+
+            while (!HasVisitedAllNodes())
+            {
+                count++;
+                AddLinks(currentNode);
+
+                bool foundGoodLink;
+                do
+                {
+                    Link link = GetLightestLink();
+                    currentNode = link.from;
+
+                    if (Utilities.displayProcedure)
+                        Console.WriteLine("Current Node : " + currentNode.id);
+
+                    if (link.node1 == currentNode)
+                        nextNode = link.node2;
+                    else
+                        nextNode = link.node1;
+
+                    if (Utilities.displayProcedure)
+                        Console.WriteLine("Current Link : " + currentNode.id + " to " + nextNode.id + " with a weight of " + link.weight);
+
+                    if (! visitedNodes.Contains(nextNode))
+                    {
+                        foundGoodLink = true;
+
+                        if(! visitedNodes.Contains(nextNode))
+                            visitedNodes.Add(nextNode);
+
+                        path.Add(link);
+
+                        if (Utilities.displayProcedure)
+                            Console.WriteLine("Added Link :\nNode " + currentNode.id + " to Node " + nextNode.id + "\n--------");
+
+                        currentNode = nextNode;
+                    }
+                    else
+                    {
+                        foundGoodLink = false;
+                        if (Utilities.displayProcedure)
+                            Console.WriteLine("Unusable Link Removed :\nNode " + link.node1.id + " to Node " + link.node2.id + "\n---------");
+                    }
+
+                    links.Remove(link);
+                } while (!foundGoodLink && links.Count != 0) ;
+            }
 
             return count;
         }
 
-        private void PrimsPathFinder(ref int count, Node currentNode, bool checkLinks = true)
+        private Link GetLightestLink()
         {
-            Console.WriteLine("Current Node : " + currentNode.id);
-            Console.WriteLine();
-            if (checkLinks)
-            {
-                if (currentNode.left != null && !links.Contains(currentNode.left) && !path.Contains(currentNode.left))
-                {
-                    currentNode.left.from = currentNode;
-                    links.Add(currentNode.left);
-                }
-                if (currentNode.up != null && !links.Contains(currentNode.up) && !path.Contains(currentNode.up))
-                {
-                    currentNode.up.from = currentNode;
-                    links.Add(currentNode.up);
-                }
-                if (currentNode.right != null && !links.Contains(currentNode.right) && !path.Contains(currentNode.right))
-                {
-                    currentNode.right.from = currentNode;
-                    links.Add(currentNode.right);
-                }
-                if (currentNode.down != null && !links.Contains(currentNode.down) && !path.Contains(currentNode.down))
-                {
-                    currentNode.down.from = currentNode;
-                    links.Add(currentNode.down);
-                }
-
-                links.Sort();
-            }
-            if (links.Count == 0)
-                return;
-
-            Link toNext;
-            Node nextNode;
-
-            count++;
-            toNext = links[0];
-
-            if (toNext.node1 == currentNode)
-                nextNode = toNext.node2;
-            else if (toNext.node2 == currentNode)
-                nextNode = toNext.node1;
-            else
-            {
-                Console.WriteLine("Link with Node :" + toNext.node1.id + " and Node :" + toNext.node2.id + " Doesnt belong to me");
-                Console.WriteLine("--------");
-                nextNode = toNext.from;
-                PrimsPathFinder(ref count, nextNode, false);
-                return;
-            }
-
-            if (nextNode.IsAvailableToGoToNext())
-            {
-                toNext.to = nextNode;
-
-                currentNode.outboundLink = toNext;
-                nextNode.inboundLink = toNext;
-
-                path.Add(toNext);
-                links.Remove(toNext);
-
-                Console.WriteLine("Link with Node : " + toNext.node1.id + " and " + toNext.node2.id + " added to " + currentNode.id);
-                Console.WriteLine("---Next---");
-                PrimsPathFinder(ref count, nextNode);
-            }
-            else
-            {
-                links.Remove(toNext);
-                Console.WriteLine("Unusable Link Removed :\nNode : " + toNext.node1.id + " and Node : " + toNext.node2.id);
-                Console.WriteLine("--------");
-                PrimsPathFinder(ref count, currentNode, false); // readd false
-            }
+            links.Sort();
+            return links[0];
         }
 
+        private bool HasVisitedAllNodes()
+        {
+            foreach(Node n in allNodes)
+            {
+                if (!visitedNodes.Contains(n))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // Returns if starting coordinates are located on the edge of the maze
         public bool VerifyStartCoordinates(int iRow, int iColumn)
         {
             if (!(iColumn >= 1 && iColumn <= columns))
@@ -161,6 +183,7 @@ namespace PrimAlgorithm
             }
         }
 
+        // Displays maze Path
         public void toString()
         {
             Console.WriteLine("B: Begining");
@@ -224,6 +247,7 @@ namespace PrimAlgorithm
             Console.WriteLine(output);
         }
 
+        //  Displays the maze with all weights and links
         public void FullMaze()
         {
             Node firstOfLine = matrix[0, 0];

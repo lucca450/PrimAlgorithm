@@ -98,6 +98,11 @@ namespace PrimAlgorithm
 
             } while (!ok);
 
+            Console.WriteLine("\nBefore generating the maze, do you want the procedure to be printed in the console ? (yes/no)");
+            string answer = Console.ReadLine();
+            Utilities.displayProcedure = answer.ToLower().Equals("yes"); 
+
+
             int nbOperation = maze.Generate(rows-1, columns-1);
 
             Console.WriteLine("Maze generated in " + nbOperation + " operations :\n");
@@ -106,8 +111,6 @@ namespace PrimAlgorithm
 
             Console.WriteLine("Nodes with links : \n");
             maze.FullMaze();
-            int i = 0;
-
         }
     }
 }
