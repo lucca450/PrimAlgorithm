@@ -28,6 +28,7 @@ namespace PrimAlgorithm
 
         private void InitializeNodesAndLinks(int startRow, int startColumn)
         {
+            Utilities.initializationCount = 0;
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < columns; j++)
@@ -45,7 +46,7 @@ namespace PrimAlgorithm
                         matrix[i, j].up = link;
                         matrix[i - 1, j].down = link;
                     }
-
+                    Utilities.initializationCount++;
                     allNodes.Add(matrix[i, j]);
                 }
             }
@@ -56,10 +57,10 @@ namespace PrimAlgorithm
             ending = matrix[endRow, endColumn];
         }
 
-        public int Generate(int startRow, int startColumn)
+        public void Generate(int startRow, int startColumn)
         {
             InitializeNodesAndLinks(startRow, startColumn);
-            return ExecutePrimsAlgorithm();
+            ExecutePrimsAlgorithm();
         }
 
         private void AddLinks(Node currentNode)
@@ -86,20 +87,20 @@ namespace PrimAlgorithm
             }
         }
 
-        private int ExecutePrimsAlgorithm()
+        private void ExecutePrimsAlgorithm()
         {
-            int count = 0;
+            Utilities.generationCount = 0;
             Node currentNode = begining, nextNode;
             visitedNodes.Add(currentNode);
 
             while (!HasVisitedAllNodes())
             {
-                count++;
                 AddLinks(currentNode);
 
                 bool foundGoodLink;
                 do
                 {
+                    Utilities.generationCount++;
                     Link link = GetLightestLink();
                     currentNode = link.from;
 
@@ -138,8 +139,6 @@ namespace PrimAlgorithm
                     links.Remove(link);
                 } while (!foundGoodLink && links.Count != 0) ;
             }
-
-            return count;
         }
 
         private Link GetLightestLink()
@@ -186,6 +185,7 @@ namespace PrimAlgorithm
         // Displays maze Path
         public void toString()
         {
+            Utilities.displayCount = 0;
             Console.WriteLine("B: Begining");
             Console.WriteLine("E: Ending");
             Console.WriteLine("O: Path\n");
@@ -225,7 +225,8 @@ namespace PrimAlgorithm
                         currentNode = currentNode.right.node2;
                     } else
                         currentNode = null;
-                        
+
+                    Utilities.displayCount++;
                 }
 
                 Console.WriteLine(rightLinkLine);

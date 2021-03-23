@@ -9,6 +9,10 @@ namespace PrimAlgorithm
         public static int nextIDNode = 1;
         public static bool displayProcedure;
 
+        public static int generationCount = 0;
+        public static int initializationCount = 0;
+        public static int displayCount = 0;
+
         public static int NextIDNode()
         {
             return nextIDNode++;
