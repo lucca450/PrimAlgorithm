@@ -21,6 +21,7 @@ namespace PrimAlgorithm
 
         public int CompareTo([AllowNull] Link other) //Override List<Link>.Sort()
         {
+            Utilities.generationCount++;
             if (other == null)
                 return 1;
 
