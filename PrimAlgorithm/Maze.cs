@@ -6,18 +6,18 @@ namespace PrimAlgorithm
 {
     class Maze
     {
-        public List<Node> visitedNodes = new List<Node>();
-        public List<Link> path = new List<Link>();
-        public List<Link> links = new List<Link>();
-        public List<Node> allNodes = new List<Node>();
+        private List<Node> visitedNodes = new List<Node>();
+        private List<Link> path = new List<Link>();
+        private List<Link> links = new List<Link>();
+        private List<Node> allNodes = new List<Node>();
 
-        public int rows { get; set; }
-        public int columns { get; set; }
+        public int rows { get; }
+        public int columns { get; }
 
-        public Node begining { get; set; }
-        public Node ending { get; set; }
+        private Node begining;
+        private Node ending;
 
-        public Node[,] matrix { get; set; }
+        private Node[,] matrix;
 
         public Maze(int m, int n)
         {
@@ -149,7 +149,7 @@ namespace PrimAlgorithm
 
         private bool HasVisitedAllNodes()
         {
-            foreach(Node n in allNodes)
+            foreach (Node n in allNodes)
             {
                 if (!visitedNodes.Contains(n))
                 {
@@ -190,7 +190,7 @@ namespace PrimAlgorithm
             Console.WriteLine("E: Ending");
             Console.WriteLine("O: Path\n");
 
-            Node firstOfLine = matrix[0,0];
+            Node firstOfLine = matrix[0, 0];
             Node currentNode = matrix[0, 0];
             string rightLinkLine = "", downLinkLine;
 
@@ -200,9 +200,9 @@ namespace PrimAlgorithm
                 downLinkLine = "";
                 while (currentNode != null)
                 {
-                    if(currentNode == begining)
+                    if (currentNode == begining)
                         rightLinkLine += String.Format("{0,-3}", "B");
-                    else if(currentNode == ending)
+                    else if (currentNode == ending)
                         rightLinkLine += String.Format("{0,-3}", "E");
                     else
                         rightLinkLine += String.Format("{0,-3}", "O");
@@ -267,7 +267,8 @@ namespace PrimAlgorithm
                         if (path.Contains(currentNode.right))               //If right link part of the path
                         {
                             rightLinkLine += String.Format("{0,-8}", "--" + currentNode.right.weight + "--");
-                        }else
+                        }
+                        else
                             rightLinkLine += String.Format("{0,-8}", "  " + currentNode.right.weight + "  ");
                     }
                         

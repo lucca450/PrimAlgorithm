@@ -12,7 +12,7 @@ namespace PrimAlgorithm
         public Link left { get; set; }
         public Link right { get; set; }
 
-        public int id;
+        public int id { get; }
 
         public Node(Link u, Link d, Link l, Link r)
         {

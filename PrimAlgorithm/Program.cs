@@ -8,8 +8,6 @@ namespace PrimAlgorithm
         {
             do
             {
-
-
                 Console.WriteLine("Welcome to the mazes generator 2000 !!");
                 bool ok;
                 int rows = 0, columns = 0, minimumSize = 4;
@@ -21,20 +19,16 @@ namespace PrimAlgorithm
                     {
                         rows = Int32.Parse(Console.ReadLine());
                         if (rows >= minimumSize)
-                            ok = true;
-                        else
-                        {
-                            ok = false;
-                            Console.WriteLine("Error - Rows must be higher or equal than " + minimumSize + " - Error");
-                        }
+                            break;
+
+                        Console.WriteLine("Error - Rows must be higher or equal than " + minimumSize + " - Error");
                     }
                     catch
                     {
-                        ok = false;
                         Console.WriteLine("Error - Rows must be an integer - Error");
                     }
 
-                } while (!ok);
+                } while (true);
                 do
                 {
                     Console.Write("Enter maze column (minimum 4): ");
@@ -42,20 +36,16 @@ namespace PrimAlgorithm
                     {
                         columns = Int32.Parse(Console.ReadLine());
                         if (columns >= minimumSize)
-                            ok = true;
-                        else
-                        {
-                            ok = false;
-                            Console.WriteLine("Error - Columns must be higher or equal than " + minimumSize + " - Error");
-                        }
+                            break;
+
+                        Console.WriteLine("Error - Columns must be higher or equal than " + minimumSize + " - Error");
                     }
                     catch
                     {
-                        ok = false;
                         Console.WriteLine("Error - Columns must be an integer - Error");
                     }
 
-                } while (!ok);
+                } while (true);
 
                 Maze maze = new Maze(rows, columns);
 
@@ -66,20 +56,16 @@ namespace PrimAlgorithm
                     {
                         rows = Int32.Parse(Console.ReadLine());
                         if (rows >= 1 && rows <= maze.rows)
-                            ok = true;
-                        else
-                        {
-                            ok = false;
-                            Console.WriteLine("Error - Rows must be part of the maze - Error");
-                        }
+                            break;
+
+                        Console.WriteLine("Error - Rows must be part of the maze - Error");
                     }
                     catch
                     {
-                        ok = false;
                         Console.WriteLine("Error - Rows must be an integer - Error");
                     }
 
-                } while (!ok);
+                } while (true);
                 do
                 {
                     Console.Write("Enter maze start column : ");
@@ -87,20 +73,16 @@ namespace PrimAlgorithm
                     {
                         columns = Int32.Parse(Console.ReadLine());
                         if (maze.VerifyStartCoordinates(rows, columns))
-                            ok = true;
-                        else
-                        {
-                            ok = false;
-                            Console.WriteLine("Error - Columns must be part of the maze - Error");
-                        }
+                            break;
+
+                        Console.WriteLine("Error - Columns must be part of the maze - Error");
                     }
                     catch
                     {
-                        ok = false;
                         Console.WriteLine("Error - Rows must be an integer - Error");
                     }
 
-                } while (!ok);
+                } while (true);
 
                 Console.WriteLine("\nBefore generating the maze, do you want the procedure to be printed in the console ? (yes/no)");
                 string answer = Console.ReadLine();
